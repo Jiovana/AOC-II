@@ -12,12 +12,15 @@ int offsetByte(int larg);
 int offsetWord(int bloco);
 int numConj(float cap, int larg, int bloco);
 float tamTotal(float cap, int larg, int bloco);
+int tamanhoBloco(int index, int largEnd, int overhead);
 
 
 int main() {
     float capUser = 0.0; //kb
     int largWord = 0; //bytes
     int tamBloco = 0; //words
+    int largEnd; //bytes
+    float overhead; //bytes
     int offB;
     int offW;
     int conj;
@@ -33,7 +36,7 @@ int main() {
         switch (opc) {
             case 1:
                 do {
-                    printf("1 - Inserir informacoes da cache\n 2 - Calcular tamanho total da cache\n 3 - Mostrar outros dados da cache\n4- Voltar \n>>OPCAO:");
+                    printf("1 - Inserir informacoes da cache\n2 - Calcular tamanho total da cache\n3 - Mostrar outros dados da cache\n4 - Voltar \n>>OPCAO:");
                     scanf("%d", &opt);
                     switch (opt) {
                         case 1:
@@ -58,6 +61,7 @@ int main() {
                             printf(" A capacidade da cache para armazenamento de informacoes do usuario eh %.2f KB! \n",
                                    capUser);
                             printf(" A largura da palavra eh %i bytes!\n", largWord);
+                            printf(" O tamanho do bloco eh de %i palavras\n", tamBloco);
                             printf(" O tamanho do offset de byte eh: %i bits! \n", offB);
                             printf(" O tamanho do offset de palavra eh: %i bits! \n", offB);
                             printf(" O numero de conjuntos da cache: %i! \n", conj);
@@ -68,7 +72,38 @@ int main() {
                 }while(opt!=4);
                 break;
             case 2:
-                
+                 do {
+                    printf("1 - Inserir informacoes da cache\n2 - Calcular tamanho do bloco de memoria da cache\n3 - Mostrar outros dados da cache\n4 - Voltar \n>>OPCAO:");
+                    scanf("%d", &opt);
+                    switch (opt) {
+                        case 1:
+                            printf("Informe o numero de bits do campo de indice do endereco: ");
+                            scanf("%i", &index);
+                            printf("Informe a largura do endereco (bytes): ");
+                            scanf("%i", &largEnd);
+                            printf("Informe overhead da cache (bytes) : ");
+                            scanf("%f", &overhead);
+                            break;
+                        case 2:
+                            tamBloco = tamanhoBloco(index, largEnd, overhead); 
+                            printf("\n O tamanho do bloco de memoria da cache e %i bytes por endereco! \n\n", tamBloco);
+                            break;
+                        case 3:
+							conj = pow(2, index);
+							offW = offsetWord((tamBloco/4));
+							printf("offw %i \n", offW);
+							offB = offsetByte(largEnd);
+							tag = tamTag(largEnd, index, offW, offB);
+							
+                            printf("\n A largura da palavra eh %i bytes!\n", largEnd);
+                            printf(" O tamanho do offset de byte eh: %i bits! \n", offB);
+                            printf(" O tamanho do offset de palavra eh: %i bits! \n", offB);
+                            printf(" O numero de conjuntos da cache: %i! \n", conj);
+                            printf(" O tamanho do indice eh: %i bits! \n", index);
+                            printf(" O tamanho da tag eh: %i bits! \n\n", tag);
+                            break;
+                    }
+                }while(opt!=4);
                 break;
         }
 
@@ -142,9 +177,31 @@ int tamIndex(int conj){
 int tamTag(int larg, int index, int offW, int offB){
     int tag;
     larg = (int)bytetoBit(larg);
+	offW = offW + 1;
     tag = larg - index - offW - offB;
     return tag;
 }
 
+int tamanhoBloco(int index, int largEnd, int overhead){
+	int conj;
+	int tag;
+	int bitsValidade;
+	int offsets; //op + ob
+	int tamBloco;
+
+	overhead = bytetoBit(overhead);
+	largEnd = bytetoBit(largEnd);
+ 
+	conj = pow(2, index); //calcula o tamanho do conjunto para determinar o tamanho da tag	
+	bitsValidade = pow(2, index); 
+
+	tag = (overhead - bitsValidade)/conj; 
+	offsets = (largEnd - index) - tag;	
+	
+	tamBloco = pow(2, offsets); 
+    tamBloco = bytetoKb(tamBloco); 
+	
+	return tamBloco;
+}
 
 
