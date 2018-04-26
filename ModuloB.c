@@ -85,7 +85,7 @@ int main() {
                             scanf("%f", &overhead);
                             break;
                         case 2:
-                            tamBloco = tamanhoBloco(index, largEnd, overhead); 
+                            tamBloco = tamanhoBloco(index, largEnd, overhead);
                             printf("\n O tamanho do bloco de memoria da cache e %i bytes por endereco! \n\n", tamBloco);
                             break;
                         case 3:
@@ -94,7 +94,7 @@ int main() {
 							printf("offw %i \n", offW);
 							offB = offsetByte(largEnd);
 							tag = tamTag(largEnd, index, offW, offB);
-							
+
                             printf("\n A largura da palavra eh %i bytes!\n", largEnd);
                             printf(" O tamanho do offset de byte eh: %i bits! \n", offB);
                             printf(" O tamanho do offset de palavra eh: %i bits! \n", offB);
@@ -191,17 +191,15 @@ int tamanhoBloco(int index, int largEnd, int overhead){
 
 	overhead = bytetoBit(overhead);
 	largEnd = bytetoBit(largEnd);
- 
-	conj = pow(2, index); //calcula o tamanho do conjunto para determinar o tamanho da tag	
-	bitsValidade = pow(2, index); 
 
-	tag = (overhead - bitsValidade)/conj; 
-	offsets = (largEnd - index) - tag;	
-	
-	tamBloco = pow(2, offsets); 
-    tamBloco = bytetoKb(tamBloco); 
-	
+	conj = pow(2, index); //calcula o tamanho do conjunto para determinar o tamanho da tag
+	bitsValidade = pow(2, index);
+
+	tag = (overhead - bitsValidade)/conj;
+	offsets = (largEnd - index) - tag;
+
+	tamBloco = pow(2, offsets);
+    tamBloco = bytetoKb(tamBloco);
+
 	return tamBloco;
 }
-
-
