@@ -12,11 +12,25 @@ void Cache4x4(int *vet, int count);
 void Cache4vias(int *vet, int count);
 
 int main() {
-    int count, *vet;
+    int count, *vet, opt;
     vet = AbrirArquivo(&count);
-    Cache16(vet,count);
-    Cache4x4(vet,count);
-    Cache4vias(vet,count);
+    do{
+        printf("\nEscolha 1 opcao:\n1- Cache 16 x 1\n2- Cache 4 x 4\n3- Cache 4 vias\n4- Sair\n");
+        scanf("%d", &opt);
+        switch (opt){
+            case 1:
+                Cache16(vet,count);
+                break;
+            case 2:
+                Cache4x4(vet,count);
+                break;
+            case 3:
+                Cache4vias(vet,count);
+                break;
+            case 4:
+                exit(0);
+        }
+    }while (opt != 4);
     return 0;
 }
 
