@@ -1,0 +1,3 @@
+C:/Users/gomes/CLionProjects/ModuloG/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/gomes/CLionProjects/ModuloG/cmake-build-debug/CMakeFiles/ModuloG.dir
+C:/Users/gomes/CLionProjects/ModuloG/cmake-build-debug/CMakeFiles/rebuild_cache.dir
