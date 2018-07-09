@@ -1,0 +1,2 @@
+float calculaCPI2Caches(float freq, int latMP, int latCD2, int latCI2, float CPI, float taxCD1, float taxCI1, float taxCD2, float taxCI2, float perDados);
+float calculaCPI1Cache(float freq, int latMP, float CPI, float taxCD1, float taxCI1, float perDados);
